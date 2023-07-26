@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ELEMENTS(요소)</title>
+</head>
+<!--  연습 : 웹서버와 애플리케이션 서버에 대한 html 페이지(문서) 만들어 보세요. -->
+<body>
+<!--  이미지 표시까지 찾아서 해보기 : img 태그 -->
+	<img src="element.png" alt = "About Element">
+	<h3>[참고] https://www.w3schools.com/html/html_entities.asp<a href="https://www.w3schools.com/html/html_entities.asp">링크</a> </h3>
+	<h2>HTML 요소(Element)의 구조</h2>
+	<ul>
+		<li>여는 태그(Opening tag)</li>
+		<p>+ 요소가 시작되는 표시입니다. 태그의 효과가 적용되기 시작합니다.</p>
+		<li>닫는 태그(Closing tag)</li>
+		<p>+ 슬래시(/)가 있는것을 제외하면 여는 태그(opening tag)와 같습니다. 이것은 요소의 끝(이 경우 단락의 끝 부분)에 위치합니다.</p>
+		<li>요소(Element</li>
+		<p>+ 여는 태그, 닫는 태그, 내용을 통틀어 요소(element)라고합니다.</p>
+	</ul>
+	<h4>요소 안에 다른 요소가 들어갈 수 있습니다. 그런 요소는 내포되었다고 표현합니다.</h4>
+	<h2>블럭 레벨 요소 vs 인라인 요소(Block versus inline elements)</h2>
+	<ol>
+		<li><strong>블록 레벨 요소(Block-level elements)</strong></li>
+			<p>웹페이지 상에 블록(Block)을 만드는 요소입니다. 
+	    	블록 레벨 요소는 앞뒤 요소 사이에 새로운 줄(Line)을 만들고 나타납니다.즉 블록 레벨 요소 이전과 이후 요소사이의 줄을 바꿉니다.<br> 
+	    	블록 레벨 요소는 일반적으로 페이지의 구조적 요소를 나타낼 때 사용됩니다. 예를 들어 개발자는 블록 레벨 요소를 사용하여<br> 
+	    	단락(Paragraphs), 목록(lists), 네비게이션 메뉴(Navigation Menus), 꼬리말(Footers) 등을 표현할 수 있습니다.<br>
+	    	블록 레벨 요소는 인라인 요소(Inline elements)에 중첩될(Nested inside)수 없습니다. 그러나 블록 레벨 요소는 다른 블록 레벨 요소에 중첩될 수 있습니다.</p>
+ 		<li><strong>인라인 요소(Inline elements)</strong></li>
+	 		<p>항상 블록 레벨 요소내에 포함되어 있습니다. <br>
+	    	인라인 요소는 문서의 한 단락같은 큰 범위에는 적용될 수 없고 문장, 단어 같은 작은 부분에 대해서만 적용될 수 있습니다.<br>
+	    	인라인 요소는 새로운 줄(Line)을 만들지 않습니다. 즉 인라인 요소를 작성하면 그것을 작성한 단락내에 나타나게 됩니다.<br>
+	    	예를 들어, 인라인 요소에는 하이퍼링크를 정의하는 요소인 <a> , 텍스트(Text)를 강조하는 요소인 &lt;em&gt;,&lt;strong&gt; 등이 있습니다.</p>
+    	<li><strong>빈 요소(Empty elements)</strong></li>
+	    	<p>모든 요소가 위에 언급된 여는 태그, 내용, 닫는 태그 패턴을 따르는 것은 아닙니다.<br>
+	    	주로 문서에 무언가를 첨부하기 위해 단일 태그(Single tag)를 사용하는 요소도 있습니다. 예를 들어 &lt;img&gt; 요소는 해당 위치에 이미지를 삽입하기 위한 요소입니다:</p>
+	</ol>
+	<h2>속성(Attributes)</h2>
+		<p>속성은 요소에 추가적인 내용을 담고 싶을 때 사용합니다. 이후에 스타일(디자인)과 관련된 내용이나 기타 내용을 위해 해당 목표를 구분할 수 있는 class 속성을 부여했습니다.<br>
+		속성을 사용할 때에는 아래 내용을 지켜야 합니다.<br>
+	<ol>
+		<li><strong>요소 이름 다음에 바로 오는 속성은 요소 이름과 속성 사이에 공백이 있어야 되고, 하나 이상의 속성들이 있는 경우엔 속성 사이에 공백이 있어야 합니다.</strong></li>
+		<li><strong>속성 이름 다음엔 등호(=)가 붙습니다.</strong></li>
+		<li><strong>속성 값은 열고 닫는 따옴표로 감싸야 합니다.</strong></li>
+	</ol>
+	</p>	
+</body>
+</html>

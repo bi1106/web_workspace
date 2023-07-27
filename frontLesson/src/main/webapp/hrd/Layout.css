@@ -1,0 +1,59 @@
+@charset "UTF-8";
+html,body{
+	margin : 0px;
+	height : 100vh;
+}
+/* 블록요소의 width는 기본이 화면의 100%, height는 컨텐츠 크기 만큼. 높이는 padding으로 정하기 */
+header{
+	padding : 55px 20px;
+	background-color : orange;
+	color : white;
+	box-sizing : border-box;
+	height : 20vh;
+	text-align : center;	
+}
+
+
+nav ul{
+	margin : 0px;
+	list-style : none;
+	background-color : navy;
+	overflow: hidden;
+	height : 7vh;
+}
+
+nav {
+	box-sizing: border-box;
+	min-height: 7vh;
+}
+
+nav li {
+	padding : 5px;
+	float: left;
+	height : 7vh;
+}
+
+nav ul a {
+	text-decoration : none;
+	padding : 20px;	
+	display : inline-block;
+	color : white;
+}
+
+section {
+	background-color : gray;
+	padding: 20px;
+	box-sizing: border-box;
+	height: 66vh;
+}
+
+
+footer {
+	padding : 10px;
+	background-color : cornflowerblue;
+	color : white;
+	font-size : 80%;
+	text-align : center;
+	box-sizing: border-box;
+	height: 7vh;
+}

@@ -1,0 +1,17 @@
+@charset "UTF-8";
+section h2{
+	text-align : center;
+}
+
+section table{
+	margin : auto;
+	width : 600px;
+	border : 2px solid black;
+	border-collapse : separate;
+	border-spacing : 2px;
+}
+
+th,td{
+	border : 1px solid black;
+	text-align : center;
+}

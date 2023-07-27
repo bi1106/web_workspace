@@ -1,0 +1,29 @@
+@charset "UTF-8";
+
+section h2{
+	text-align: center;
+}
+
+section table{
+	width : 1000px;
+	height : 300px;
+	margin : auto;
+	border : 2px solid black;
+	border-collapse : separate;
+	border-spacing : 2px;
+}
+
+
+th,td{
+	border : 1px solid black;
+}
+
+td{
+	padding : 5px 100px 5px 5px;
+}
+
+tr:last-child>td {
+	text-align : center;
+}
+
+

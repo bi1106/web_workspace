@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>dateFormSample.html</title>
+</head>
+<body>
+<form action="">
+	<label for="selectNight">숙박일수</label>
+	<select name="days" id="">
+		<option value="0">선택</option>
+		<option value="1">1박</option>
+		<option value="2">2박</option>
+		<option value="3">3박</option>
+		<option value="4">4박</option>
+	</select><br>
+	<label for="enterDate">입실날짜 :</label>
+	<input type="date" name="start" id="enterDate"><br>
+	<label for="outDate">퇴식날짜 :</label>
+	<input type="date" name="end" id="outDate" disabled><br>
+</form>
+<!-- 1. 입실날짜는 오늘 날짜로 초기화 합니다.
+	 2. 퇴실날짜는 선택한 숙박일수 +입실날짜로 합니다.
+	 3. 퇴실날짜는 select 태그에서 숙박일수 선택하면 계산해서 표시합니다.
+	 						clich, chenge 이벤트
+	 4. 입실날짜는 오늘 이전 날짜는 선택x(input태그에 min속성)
+	 5. 입실날짜는 최대 오늘~3달 이후로만 설정할 수 있습니다.(input max 속성)
+	 ** 참고 : input type=date 인 경우 value는 '년도 4자리-월 2자리-일 2자리' 문자열로 설정-->
+<script type="text/javascript">
+document.addEventListener("DOMContentLoaded", function() {
+    const enterDateInput = document.getElementById("enterDate");
+    const outDateInput = document.getElementById("outDate");
+    const selectNight = document.getElementById("selectNight");
+
+    // 오늘 날짜를 가져오는 함수
+    function getTodayDate() {
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0');
+        const day = String(today.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
+
+    // 오늘 날짜로 입실날짜 설정
+    enterDateInput.value = getTodayDate();
+
+    // 입실날짜는 최소 오늘로 설정
+    enterDateInput.min = getTodayDate();
+
+    // 입실날짜는 최대 3달 이후로 설정
+    const maxDate = new Date();
+    maxDate.setMonth(maxDate.getMonth() + 3);
+    enterDateInput.max = maxDate.toISOString().split('T')[0];
+
+    // select 태그에서 숙박일수 선택시 퇴실날짜 계산
+    selectNight.addEventListener("change", function() {
+        const selectedNight = parseInt(this.value); // 선택된 숙박일수
+
+        if (selectedNight > 0) {
+            // 퇴실날짜 계산하여 설정
+            const enterDate = new Date(enterDateInput.value);
+            const outDate = new Date(enterDate);
+            outDate.setDate(outDate.getDate() + selectedNight);
+            outDateInput.value = outDate.toISOString().split('T')[0];
+            outDateInput.disabled = false;
+        } else {
+            // 숙박일수를 선택하지 않았을 때 퇴실날짜를 비활성화
+            outDateInput.value = "";
+            outDateInput.disabled = true;
+        }
+    });
+});
+
+</script>
+</body>
+</html>

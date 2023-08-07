@@ -1,6 +1,7 @@
 package sample.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,99 +11,95 @@ import java.util.List;
 import jdbc.util.OracleUtility;
 import sample.dto.MemberDto;
 
-
-
-//DAO에는 입력과 출력은 포함시키지 않음. 오직 어떤 형식의 데이터를 받아서
-//어떤 SQL을 실행하여, 어떤 값을 리턴할 것인가를 중점을 두고 정의하면 됨
-//DTO는 데이터를 저장하는 목적의 클래스, DAO는 어떤 동작을 할 것인지를 정의한 메소드
+//DAO 에는 입력과 출력은 포함시키지 않습니다. 오직 어떤 형식의 데이터를 받아서
+//어떤 SQL을 실행하여 , 어떤 값을 리턴할 것인가를 중점을 두고 정의하면 됩니다.
+//DTO 는 데이터를 저장하는 목적의 클래스 , DAO 는 어떤 동작을 할것인지를 정의한 메소드만 있습니다. 
 public class MemberDao {
-	//싱글톤으로 만들어 보기
+// insert,select,update
+// 싱글톤으로 만들어 봅니다.
+	
 	private static MemberDao dao = new MemberDao();
 	private MemberDao() {}
-	public static MemberDao getMemberDao() {		//메소드 이름은 getInstance외에 내용을 알 수 있는 이름으로 정하기
+	public static MemberDao getMemberDao() {   //메소드 getInstance외에 내용을 알수 있는 이름으로 정하기
 		return dao;
 	}
 	
+		
+	public int insert(MemberDto md) throws SQLException {
+		Connection conn = OracleUtility.getConnection();
+		String sql = "insert into MEMBER_TBL_02 values (seq_custno.nextval, ?, ?, ?, sysdate, ?, ?)";
+		PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, md.getCustname());
+			ps.setString(2, md.getPhone());
+			ps.setString(3, md.getAddress());
+			ps.setString(4, md.getGrade());
+			ps.setString(5, md.getCity());
+			int result = ps.executeUpdate();
+			ps.close();
+			conn.close();
+			return result;
+		}
 	
-	
-	//회원 등록
-	public int insertMem(MemberDto member) throws SQLException {
-		Connection con = OracleUtility.getConnection();
-		String sql = "INSERT INTO MEMBER_TBL_02 VALUES (mem2seq.nextval,?,?,?,sysdate,?,?)";
-		PreparedStatement ps = con.prepareStatement(sql);
-		ps.setString(1, member.getCustname());
-		ps.setString(2, member.getPhone());
-		ps.setString(3, member.getAddress());
-		ps.setString(4, member.getGrade());
-		ps.setString(5, member.getCity());
-
-		int result = ps.executeUpdate();
-
-		ps.close();
-		con.close();
-		return result;
-	}
-	
-	//selectOne 회원 1명 정보 가져오는거 
-	public MemberDto selectOne(int custno) throws SQLException{
-		Connection con = OracleUtility.getConnection();
-		String sql="SELECT * FROM MEMBER_TBL_02 WHERE CUSTNO = ?";		//PK 조회 : 결과 행 0개 또는 1개
-		PreparedStatement ps = con.prepareStatement(sql);	
+	public MemberDto selectOne(int custno) throws SQLException {		//수정할 데이터 가져오기
+		Connection conn = OracleUtility.getConnection();
+		String sql = "select * from MEMBER_TBL_02 where custno = ?";
+		PreparedStatement ps = conn.prepareStatement(sql);
 		ps.setInt(1,custno);
-		ResultSet rs = ps.executeQuery();
 		MemberDto result = null;
-		if(rs.next()) {
-			result = new MemberDto(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDate(5),
-					rs.getString(6), rs.getString(7));
-		}
-		ps.close();
-		con.close();
-		return result;
-	}
-	
-	//전체 회원 목록
-	public List<MemberDto> selectAll() throws SQLException{
-		Connection con = OracleUtility.getConnection();
-		String sql="SELECT custno, custname, phone, address, joindate,"
-				+ "CASE WHEN grade = 'A' THEN 'VIP'"
-				+ "	WHEN grade = 'B' THEN '일반'"
-				+ "	WHEN grade = 'C' THEN '직원'"
-				+ "	END AS grade\r\n"
-				+ "	,city"
-				+ "FROM MEMBER_TBL_02;";
-		PreparedStatement ps = con.prepareStatement(sql);
 		ResultSet rs = ps.executeQuery();
-		List<MemberDto> result = new ArrayList<>();
-		while(rs.next()) {
-			result.add(new MemberDto(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4),
-					rs.getDate(5), rs.getString(6), rs.getString(7)));
+		if(rs.next()) {
+			String custname = rs.getString(2);
+			String phone = rs.getString(3);
+			String address = rs.getString(4);
+			Date joindate = rs.getDate(5);
+			String grade = rs.getString(6);
+			String city = rs.getString(7);
+			result = new MemberDto(custno, custname, phone, address, joindate, grade, city);
 		}
-		ps.close();
-		con.close();
 		return result;
 	}
 	
-	//회원 정보 수정
-	public int update(MemberDto member) throws SQLException{
-		Connection con = OracleUtility.getConnection();
-		String sql = "UPDATE MEMBER_TBL_02 SET CUSTNO = ?, CUSTNAME = ?, PHONE = ? ADDRESS = ?,"
-				+ "JOINDATE = ?, GRADE = ?, CITY = ?"
-				+ "WHERE CUSTNO = ?";
-		PreparedStatement ps = con.prepareStatement(sql);
-		ps.setInt(1, member.getCustno());
-		ps.setString(2, member.getCustname());
-		ps.setString(3, member.getPhone());
-		ps.setString(4, member.getAddress());
-		ps.setDate(5, member.getJoindate());
-		ps.setString(6, member.getGrade());
-		ps.setString(7, member.getCity());
-		ps.setInt(8, member.getCustno());
+	public List<MemberDto> selectAll() throws SQLException {		//전체 목록 가져오기
+		Connection conn = OracleUtility.getConnection();
+		String sql = "select custno,custname,phone,address,joindate,"
+				+ " decode(grade,'A','VIP','B','일반','C','직원') ,city "
+				+ " from MEMBER_TBL_02";
+		PreparedStatement ps = conn.prepareStatement(sql);
 		
+		List<MemberDto> result = new ArrayList<>();
+		ResultSet rs = ps.executeQuery();
+		while(rs.next()) {
+			MemberDto md = new MemberDto(rs.getInt(1), 
+						rs.getString(2), 
+						rs.getString(3), 
+						rs.getString(4), 
+						rs.getDate(5), 
+						rs.getString(6), 
+						rs.getString(7));
+			result.add(md);
+		}        
+		ps.close();
+		conn.close();
+			return result;
+		
+	}
+	
+	public int update(MemberDto md) throws SQLException {
+		Connection conn = OracleUtility.getConnection();
+		//수정 가능한 항목(컬럼)은 모두 set에 포함시키기
+		String sql = "update MEMBER_TBL_02 set custname = ?,phone = ?,address =?,city =? \n"
+				+ "where custno = ?";
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ps.setString(1, md.getCustname());
+		ps.setString(2, md.getPhone());
+		ps.setString(3, md.getAddress());
+		ps.setString(4, md.getCity());
 		int result = ps.executeUpdate();
 		
 		ps.close();
-		con.close();
-		
+		conn.close();
 		return result;
 	}
+	
+	
 }

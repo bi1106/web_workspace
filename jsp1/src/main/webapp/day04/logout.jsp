@@ -8,7 +8,7 @@
 </head>
 <body>
 <%
-	// 현재 브라우저에 저장된 JSESSIONID 항목을 삭제합니다.
+	// 방법1.현재 브라우저에 저장된 JSESSIONID 항목을 삭제합니다.
 	session.invalidate();
 	// JSESSTIONID는 유지하고 애트리뷰트만 삭제하기
 	// session.removeAttribute("user");

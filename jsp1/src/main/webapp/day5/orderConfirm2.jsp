@@ -5,18 +5,20 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>orderConfirm2.jsp</title>
 </head>
 <body>
-<jsp:useBean id = "order" class = "sample.dto.OrderDto" scope="request"/> 
-<jsp:setProperty property = "*" name = "order" /> 
+<jsp:useBean id = "order" class = "sample.dto.OrderDto"/> 
+<jsp:setProperty property = "*" name = "order"/> 
 <% 
-	OrderDao dao = OrderDao.getOrderDao(); 
-	if (dao.insert(order)==1){ 
+OrderDao dao = OrderDao.getOrderDao(); 
+if (dao.insert(order)==1){
 %> 
-<jsp:forward page = "orderResult.jsp" /> 
-<% 
-} 
+<jsp:forward page = "orderResult.jsp"/> 
+<%-- 문제10. <jsp:forward page="orderResult.jsp"/> 를 설명하세요.
+orderConfirm2.jsp 파일에서 받은 요청 orderResult.jsp 요청을 보낸다 --%>
+<%
+}
 %>
 </body>
 </html>

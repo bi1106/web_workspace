@@ -27,10 +27,10 @@ public class ProductDao {
 		
 		public int insert(ProductDto dto) {
 			SqlSession mapper = factory.openSession();
-			int count = mapper.insert("products.insert",dto);
-			mapper.commit();
+			int result = mapper.insert("products.insert", dto);
+			mapper.commit();		//commit 필수.
 			mapper.close();
-			return count;
+			return result;
 		}
 		// 동일한 상품명이 여러 개이면 오류.
 		public ProductDto getByPname(String pname) {

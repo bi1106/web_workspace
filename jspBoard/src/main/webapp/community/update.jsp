@@ -12,9 +12,10 @@
 <body>
 	<%
 	BookUser user = (BookUser)session.getAttribute("user");
-	if(user == null){	// 로그인 안 된 상태
-		throw new IllegalAccessException(); // IllegalAccessException은 일반적으로 임의의 Exception 발생시킬 때 많이 씁니다. 
-	}
+	if(user==null) /* 로그인이 안된 상태 */
+		throw new IllegalAccessException();		
+	/* IllegalAccessException 은 일반적으로 임의의 Exception 발생시킬 때 많이 씁니다.*/
+	
 	int idx = 0;
 	int pageNo = 0;
 	if (request.getParameter("idx") != null) {
@@ -29,9 +30,8 @@
 	CommunityDao dao = CommunityDao.getInstance();
 	Community vo = dao.selectByIdx(idx); //idx 글 조회하기
 
-	if(user.getId().equals(vo.getWriter())){ // 로그인한 사용자와 글쓴이가 다를 때
-		throw new IllegalAccessException();
-	}
+	if(!user.getId().equals(vo.getWriter()))	/* 로그인한 사용자와 글쓴이가 다를 때 */
+				throw new IllegalAccessException();
 	
 	//(1)
 	request.setAttribute("vo", vo);
